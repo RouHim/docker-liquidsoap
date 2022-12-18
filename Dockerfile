@@ -20,7 +20,11 @@ RUN set -eux; \
 
 
 
-FROM phasecorex/user-debian:10-slim
+FROM debian:10-slim
+
+# Add PhasecoreX user-entrypoint script
+ADD https://raw.githubusercontent.com/PhasecoreX/docker-user-image/master/user-entrypoint.sh /bin/user-entrypoint
+RUN chmod +x /bin/user-entrypoint && /bin/user-entrypoint --init
 
 COPY --from=builder /home/opam/root /
 
@@ -31,4 +35,4 @@ RUN set -eux; \
     rm -rf /var/lib/apt/lists/*; \
     /app/liquidsoap --version
 
-ENTRYPOINT ["user-entrypoint", "/app/liquidsoap"]
+ENTRYPOINT ["/bin/user-entrypoint", "/app/liquidsoap"]
