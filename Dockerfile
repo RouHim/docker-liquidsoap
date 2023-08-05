@@ -1,4 +1,4 @@
-FROM ocaml/opam:debian-11-ocaml-4.14 as builder
+FROM ocaml/opam:debian-12-ocaml-5.2 as builder
 
 ENV PACKAGES="taglib mad lame vorbis cry samplerate opus fdkaac faad flac ocurl liquidsoap"
 
@@ -18,7 +18,7 @@ RUN set -eux; \
 
 
 
-FROM debian:11-slim
+FROM debian:12-slim
 
 # Add PhasecoreX user-entrypoint script
 ADD https://raw.githubusercontent.com/PhasecoreX/docker-user-image/master/user-entrypoint.sh /bin/user-entrypoint
