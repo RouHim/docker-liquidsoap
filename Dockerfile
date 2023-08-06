@@ -27,7 +27,7 @@ RUN chmod +x /bin/user-entrypoint && /bin/user-entrypoint --init
 COPY --from=builder /home/opam/root /
 
 RUN set -eux; \
-    sed -i 's/$/ non-free/' /etc/apt/sources.list; \
+    sed -i 's/^Components:.*/Components: main contrib non-free/g' /etc/apt/sources.list.d/debian.sources; \
     apt-get update; \
     cat /app/depexts | xargs apt-get install -y --no-install-recommends; \
     rm -rf /var/lib/apt/lists/*; \
