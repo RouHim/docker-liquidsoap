@@ -3,7 +3,7 @@ FROM ocaml/opam:debian-12-ocaml-5.2 as builder
 ENV PACKAGES="taglib mad lame vorbis cry samplerate opus fdkaac faad flac ocurl liquidsoap"
 
 RUN set -eux; \
-    sudo sed -i 's/$/ non-free/' /etc/apt/sources.list; \
+    sudo sed -i 's/^Components:.*/Components: main contrib non-free/g' /etc/apt/sources.list.d/debian.sources; \
     sudo apt-get update; \
     opam depext --install $PACKAGES
 
