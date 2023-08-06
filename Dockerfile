@@ -5,6 +5,7 @@ ENV PACKAGES="taglib mad lame vorbis cry samplerate opus fdkaac faad flac ocurl 
 RUN set -eux; \
     sudo sed -i 's/^Components:.*/Components: main contrib non-free/g' /etc/apt/sources.list.d/debian.sources; \
     sudo apt-get update; \
+    opam pin -ny git+https://github.com/savonet/ocaml-flac; \
     opam depext --install $PACKAGES
 
 RUN set -eux; \
