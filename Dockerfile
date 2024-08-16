@@ -1,11 +1,14 @@
-FROM ocaml/opam:debian-12-ocaml-4.14 as builder
+FROM ocaml/opam:debian-12-ocaml-4.14 AS builder
 
 ENV PACKAGES="taglib mad lame vorbis cry samplerate opus fdkaac faad flac ocurl liquidsoap"
 
+USER root
+
 RUN set -eux; \
-    sudo sed -i 's/^Components:.*/Components: main contrib non-free/g' /etc/apt/sources.list.d/debian.sources; \
-    sudo apt-get update; \
-    opam pin -ny git+https://github.com/savonet/ocaml-flac; \
+    sed -i 's/^Components:.*/Components: main contrib non-free/g' /etc/apt/sources.list.d/debian.sources; \
+    apt-get update
+
+RUN set -eux; \
     opam depext --install $PACKAGES
 
 RUN set -eux; \
