@@ -26,7 +26,7 @@ FROM debian:12-slim
 
 # Add PhasecoreX user-entrypoint script
 ADD https://raw.githubusercontent.com/PhasecoreX/docker-user-image/master/user-entrypoint.sh /bin/user-entrypoint
-RUN chmod +x /bin/user-entrypoint && /bin/user-entrypoint --init
+RUN chmod +rx /bin/user-entrypoint && /bin/user-entrypoint --init
 
 COPY --from=builder /home/opam/root /
 
