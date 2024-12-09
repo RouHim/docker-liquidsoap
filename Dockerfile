@@ -22,7 +22,7 @@ RUN set -eux; \
 
 
 
-FROM debian:12-slim
+FROM ubuntu:24.04
 
 # Add PhasecoreX user-entrypoint script
 ADD https://raw.githubusercontent.com/PhasecoreX/docker-user-image/master/user-entrypoint.sh /bin/user-entrypoint
@@ -31,7 +31,7 @@ RUN chmod +rx /bin/user-entrypoint && /bin/user-entrypoint --init
 COPY --from=builder /home/opam/root /
 
 RUN set -eux; \
-    sed -i 's/^Components:.*/Components: main contrib non-free/g' /etc/apt/sources.list.d/debian.sources; \
+    sed -i 's/^# deb-src /deb-src /g' /etc/apt/sources.list; \
     apt-get update; \
     cat /app/depexts | xargs apt-get install -y --no-install-recommends; \
     rm -rf /var/lib/apt/lists/*; \
